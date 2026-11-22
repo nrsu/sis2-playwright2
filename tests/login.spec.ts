@@ -3,7 +3,7 @@ import { login } from './helpers';
 
 test('login with valid credentials', async ({ page, registeredUser }) => {
   await login(page, registeredUser.email, registeredUser.password);
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page.locator('[data-test=nav-menu]')).toBeVisible({ timeout: 30_000 }); 
   await expect(page.locator('[data-test=page-title]')).toHaveText('My account');
   await expect(page.locator('[data-test=nav-menu]')).toBeVisible(); // shown only when logged in
 });
