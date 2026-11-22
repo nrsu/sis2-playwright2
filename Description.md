@@ -1,4 +1,4 @@
-# SIS 2 — Test Automation with Playwright + CI pipeline
+# SIS 2 — Test Automation with Playwright + CI pipeline.
 
 **Site under test:** https://practicesoftwaretesting.com/ (Toolshop demo)
 **Stack:** Playwright Test, TypeScript. CI: GitHub Actions (4 shards + report merge).
