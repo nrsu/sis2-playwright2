@@ -17,26 +17,13 @@ export const test = base.extend<{ registeredUser: TestUser }>({
       email: `student.${Date.now()}.${process.pid}.${counter++}.${Math.floor(Math.random() * 1e4)}@example.com`,
       password: 'Str0ng!Passw0rd#2026',
     };
-    const response = await request.post(`${API_URL}/users/register`, {
-      data: {
-        first_name: 'Test',
-        last_name: 'Student',
-        dob: '1999-05-17',
-        phone: '5551234567',
-        email: user.email,
-        password: user.password,
-        address: {
-          street: 'Test Street 12',
-          city: 'New York',
-          state: 'NY',
-          country: 'US',
-          postal_code: '10001',
-        },
-      },
-    });
-    if (!response.ok()) {
-      throw new Error(`Could not create test user: ${response.status()} ${await response.text()}`);
-    }
+for (let attempt = 1; attempt <= 4; attempt++) {
+  const response = await request.post(`${API_URL}/users/register`, { data: payload });
+  if (response.ok()) { lastError = ''; break; }
+  lastError = `${response.status()} ${await response.text()}`;
+  await new Promise((r) => setTimeout(r, attempt * 1500));
+}
+if (lastError) throw new Error(`Could not create test user: ${lastError}`);
     await use(user);
   },
 });
